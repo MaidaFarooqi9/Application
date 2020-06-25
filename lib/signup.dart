@@ -110,7 +110,10 @@ class _SignUpState extends State<SignUp> {
       child: Center(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: FlatButton(child:Text('Register',style: TextStyle(color:Colors.white),) ,),
+        child: FlatButton(child:Text('Register',style: TextStyle(color:Colors.white),),
+        onPressed: (){
+          Navigator.pushNamed(context, '/login');
+        },),
       ),
       ),
       ),

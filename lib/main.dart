@@ -2,7 +2,7 @@
 import 'dart:ui';
 import 'package:loginanimation/seller.dart';
 import 'package:loginanimation/signup.dart';
-
+import 'package:loginanimation/cow.dart';
 import 'FadedAnimation.dart';
 import 'login.dart';
 
@@ -17,6 +17,7 @@ routes:{
   '/signup':(context)=>SignUp(),
 '/login':(context)=>Login(),
   '/seller':(context)=>Seller(),
+  '/cow':(context)=>cow(),
 },
 
 )

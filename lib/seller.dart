@@ -6,17 +6,23 @@ import 'package:image_picker/image_picker.dart';
 class Seller extends StatefulWidget {
   @override
   _SellerState createState() => _SellerState();
+  static  TextEditingController myController=TextEditingController(); //weight
+  static TextEditingController myController1=TextEditingController(); //teeth
+  static TextEditingController myController2=TextEditingController(); //price
+  static File imageFile;
+
+  //Seller(this.myController,this.myController1,this.myController2,this.imageFile,);
+
 }
 
 class _SellerState extends State<Seller> {
 
 
-  final myController=TextEditingController();
-  final myController1=TextEditingController();
-  final myController2=TextEditingController();
-  File imageFile;
-  String details;
-  String W,T,P;
+
+
+//  String details;
+  //String W,T,P;
+
   Future<void> _showMyDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -53,7 +59,7 @@ class _SellerState extends State<Seller> {
   Camera(BuildContext context)async{
     var image=await ImagePicker.pickImage(source:ImageSource.camera);
     this.setState((){
-      imageFile=image;
+     Seller.imageFile=image;//bec static obj can't be accessed through initilizer ,you've to writr class name even if using in their own class
     }
     );
     Navigator.of(context).pop;//removes the alert dialog context
@@ -62,28 +68,23 @@ class _SellerState extends State<Seller> {
   Gallery(BuildContext context)async{
     var image=await ImagePicker.pickImage(source:ImageSource.gallery);
     this.setState((){
-      imageFile=image;
+      Seller.imageFile=image;
     }
     );
     Navigator.of(context).pop;
   }
 
   Widget imageSize(){
-    if(imageFile==null){return Text('no file selected');}
+    if(Seller.imageFile==null){return Text('no file selected');}
     else
-    {return Image.file(imageFile,width:400,height:400,);}
+    {return Image.file(Seller.imageFile,width:400,height:400,);}
   }
+
   Widget Details(){
-    if(myController==null&&myController1==null&&myController2==null){return Text('no details');}
+    if(Seller.myController==null&&Seller.myController1==null&&Seller.myController2==null){return Text('no details');}
     else
-    {return Text(myController.text+" "+myController1.text+"  "+myController2.text);}
+    {return Text(Seller.myController.text+" "+Seller.myController1.text+"  "+Seller.myController2.text);}
   }
-
-
-
-
-
-
 
   Future<void> _DetailsDialog(BuildContext context) async {
     return showDialog<void>(
@@ -95,18 +96,19 @@ class _SellerState extends State<Seller> {
           content: SingleChildScrollView(
 
             child: ListBody(
-
               children: <Widget>[
-                TextField(controller:myController,
+                TextField(controller:Seller.myController,
               decoration:InputDecoration(hintText:"weight",)   ),
-                TextField(controller:myController1,
+                TextField(controller:Seller.myController1,
                     decoration:InputDecoration(hintText:"no of teeth",)),
-                TextField(controller:myController2,
+                TextField(controller:Seller.myController2,
                     decoration:InputDecoration(hintText:"price",)),
                 FlatButton(
                   child: Text('Done'),
                   onPressed: () {
-                    Text('response recorded');
+                    SnackBar s=SnackBar(content:Text("response recorded"),duration:Duration(milliseconds: 2),
+                      backgroundColor:Colors.pinkAccent,);
+                    Scaffold.of(context).showSnackBar(s);
                   },
                 ),
                 IconButton(icon:Icon(Icons.clear),onPressed:(){
@@ -131,13 +133,13 @@ return Scaffold(
     children: <Widget>[
 
       imageSize(),
-
+//add image
     Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(8.0),
       child: Details(),
     ),
        Padding(
-         padding: const EdgeInsets.all(14.0),
+         padding: const EdgeInsets.all(10.0),
          child: Container(
           height: 50,
           width:130,
@@ -159,7 +161,7 @@ return Scaffold(
       ),
        ),
 
-
+//add details
       Padding(
         padding: const EdgeInsets.all(14.0),
         child: Container(
@@ -177,15 +179,38 @@ return Scaffold(
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child:       FlatButton(child: Text('add details'),onPressed: (){
+              child:       FlatButton(
+                  child: Text('add details'),onPressed: (){
                 _DetailsDialog(context);
-
-              }),
+              }
+              ),
             ),
           ),
         ),
       ),
-
+//view image
+      Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Container(
+          height: 50,
+          width:130,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: LinearGradient(
+                  colors: [ 
+                    Color.fromRGBO(130, 158, 251, 9),
+                    Color.fromRGBO(103, 104, 251, .6),
+                  ]
+              )
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FlatButton(onPressed:(){Navigator.pushNamed(context,'/cow');}, child: Text("View image") ,),
+            ),
+          ),
+        ),
+      ),
 
 
 
