@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'ProductModel.dart';
 import "seller.dart";
-
-
 class ProductScreen extends StatefulWidget {
   final ValueSetter<ProductModel> _valueSetter;
   final ValueSetter<ProductModel>_valueRemoval;
@@ -17,9 +15,7 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
 
-
   //Seller s=new Seller(myController, myController1, myController2, imageFile);
-
 
   List<ProductModel> products = [
     ProductModel("cow1", 300,"",Image.network("https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?ixlib=rb-1.2.1&w=1000&q=80")),
